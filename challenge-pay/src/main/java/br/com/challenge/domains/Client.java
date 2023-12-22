@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,6 +41,9 @@ public class Client implements Serializable {
 	
 	@Column(name = "password")
 	private String password;
+	
+	@Column(name = "creation_date")
+	private LocalDateTime creationDate;
 	
 	@OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
 	private Wallet wallet;
