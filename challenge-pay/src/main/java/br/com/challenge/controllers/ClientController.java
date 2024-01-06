@@ -1,10 +1,12 @@
 package br.com.challenge.controllers;
 
+import br.com.challenge.api.ClientApi;
 import br.com.challenge.api.ClientMapper;
 import br.com.challenge.api.ClientRequest;
 import br.com.challenge.api.ClientResponse;
 import br.com.challenge.domains.Client;
 import br.com.challenge.services.ClientService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,8 +18,9 @@ import java.util.UUID;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/clients")
-public class ClientController {
+@RequestMapping("/api/v1/clients")
+@Tag(name = "Client", description = "Endpoints for managing Clients")
+public class ClientController implements ClientApi {
 	
 	private final ClientMapper clientMapper;
 	private final ClientService clientService;
@@ -38,7 +41,7 @@ public class ClientController {
 	}
 	
 	@GetMapping(value = "/{clientIdentifier}")
-	public ResponseEntity<ClientResponse> getClient(@PathVariable UUID clientIdentifier) {
+	public ResponseEntity<ClientResponse> getClient(@PathVariable final UUID clientIdentifier) {
 		
 		final Client client = clientService.getClient(clientIdentifier);
 		final ClientResponse clientResponse = clientMapper.clientToClientResponse(client);

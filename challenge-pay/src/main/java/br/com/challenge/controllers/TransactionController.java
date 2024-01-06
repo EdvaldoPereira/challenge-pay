@@ -1,5 +1,6 @@
 package br.com.challenge.controllers;
 
+import br.com.challenge.api.TransactionApi;
 import br.com.challenge.api.TransactionMapper;
 import br.com.challenge.api.TransactionRequest;
 import br.com.challenge.api.TransactionResponse;
@@ -7,6 +8,7 @@ import br.com.challenge.domains.Client;
 import br.com.challenge.domains.Transaction;
 import br.com.challenge.services.ClientService;
 import br.com.challenge.services.TransactionService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/transactions")
-public class TransactionController {
+@RequestMapping("/api/v1/transactions")
+@Tag(name = "Transaction", description = "Endpoints for execute transactions")
+public class TransactionController implements TransactionApi {
 	
 	private final ClientService clientService;
 	private final TransactionService transactionService;
