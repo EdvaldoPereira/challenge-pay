@@ -1,5 +1,5 @@
 CREATE TABLE public.clients (
-	id int8 NOT NULL,
+	id serial NOT NULL,
 	first_name varchar(50) NOT NULL,
 	last_name varchar(80) NOT NULL,
 	"document" varchar(15) NULL,
@@ -12,7 +12,7 @@ CREATE TABLE public.clients (
 );
 
 CREATE TABLE public.wallets (
-	id int8 NOT NULL,
+	id serial NOT NULL,
 	creation_date timestamp NULL,
 	balance numeric(14, 2) NULL,
 	client_id int8 NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE public.wallets (
 );
 
 CREATE TABLE public.transactions (
-	id int8 NOT NULL,
+	id serial NOT NULL,
 	creation_date timestamp NOT NULL,
 	amount numeric(14, 2) NOT NULL,
 	sender int8 NOT NULL,
