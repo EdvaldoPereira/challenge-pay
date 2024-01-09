@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:12.17-alpine
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    networks:
+      - challenge-network
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: postgres
+      POSTGRES_DB: challenge-pay
+      POSTGRES_ROOT_HOST: localhost
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+  challenge-pay:
+    image: edvaldonascimento/challenge-pay
+    restart: always
+    build: ./challenge-pay
+    working_dir: /challenge-pay
+    environment:
+      - spring.datasource.url=jdbc:postgresql://db:5432/challenge-pay
+      - spring.datasource.username=postgres
+      - spring.datasource.password=root
+      - spring.flyway.url=jdbc:postgresql://db:5432/challenge-pay
+      - spring.flyway.user=postgres
+      - spring.flyway.password=root
+    ports:
+      - "80:80"
+    command: mvn spring-boot:run
+    depends_on:
+      - db
+    networks:
+      - challenge-network
+networks:
+  challenge-network:
+    driver: bridge
